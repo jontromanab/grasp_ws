@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="limited" default="false"/>
+  
+  <param unless="$(arg limited)" name="robot_description" command="$(find xacro)/xacro.py '$(find grasp_ws_description)/Robot/grasp_ws.xacro'" />
+  <param if="$(arg limited)" name="robot_description" command="$(find xacro)/xacro.py '$(find grasp_ws_description)/Robot/grasp_ws_joint_limited.xacro'" />
+
+
+    <!--param unless="$(arg limited)" name="robot_description" command="$(find xacro)/xacro.py '$(find grasp_ws_description)/Robot/grasp_ws_kinect2.xacro'" />
+  <param if="$(arg limited)" name="robot_description" command="$(find xacro)/xacro.py '$(find grasp_ws_description)/Robot/grasp_ws_kinect2_joint_limited.xacro'" /-->
+
+
+  
+
+	
+</launch>

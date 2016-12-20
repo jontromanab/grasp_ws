@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<robot name="grasp_workspace_kinect2" xmlns:xacro="http://ros.org/wiki/xacro">
+	
+<!-- common stuff -->
+  <xacro:include filename="$(find grasp_ws_description)/urdf/ur5/ur5.gazebo.urdf.xacro" />
+
+  <!-- ur5 -->
+  <xacro:include filename="$(find grasp_ws_description)/urdf/ur5/ur5.urdf.xacro" />
+  <xacro:include filename="$(find grasp_ws_description)/urdf/ur5/ur5.transmission.xacro" />
+	
+   <!-- Kinect2 -->
+   <xacro:include filename="$(find grasp_ws_description)/urdf/kinect2/kinect2.urdf.xacro"/>
+	
+
+  <!-- Robotiq gripper -->
+  <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+
+ 
+
+  <!-- Workcell -->
+  <xacro:include filename="$(find grasp_ws_description)/urdf/workcell/workcell.xacro" />
+	
+	
+
+	<!-- property list -->
+	
+	<xacro:ur5_robot prefix="" joint_limited="true"/>
+        <xacro:property name="arm_prefix" value=""/>
+	<xacro:workcell prefix=""/>
+        <xacro:property name="M_PI" value="3.1415926535897931" /> 
+	
+	<!-- color macros -->
+	
+	
+	<xacro:macro name="material_orange_transparent">
+		<material name="orange_transparent">
+			<color rgba="1 0.5 0 0.4"/>
+		</material>
+	</xacro:macro>
+	<xacro:macro name="material_blue_transparent">
+		<material name="blue_transparent">
+			<color rgba="0 0.8 1 0.4"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:material_orange_transparent />
+	<xacro:material_blue_transparent />
+	<!-- end of color macros -->
+        <link name="world"/>
+	
+	
+	
+	
+	<!--instantiating workcell definitions -->
+        <joint name="world_to_workcell" type="fixed">
+		<parent link="world"/>
+		
+		<child link="workcell_base"/>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+	</joint>
+
+	
+
+	<!-- instantiating sensor definitions -->
+	
+        <xacro:kinect2_xacro  parent="world" prefix="">
+     <origin xyz="2 -2 2" rpy="-${M_PI/3} 0 ${M_PI/4}"/>
+        </xacro:kinect2_xacro >
+
+        <!-- end of sensor definitions -->
+	
+	
+      <!-- Attaching robotiq 85 hand to the arm -->
+      <xacro:robotiq_85_gripper prefix="" parent="${arm_prefix}ee_link" >
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:robotiq_85_gripper>
+	<!-- Hand attached to the arm -->
+
+	
+
+		
+	<joint name="workcell_to_robotbase" type="fixed">
+		<parent link="workcell_base"/>
+		<child link="${arm_prefix}base_link"/>
+		<origin xyz="0.305 -0.195 0.77" rpy="0 0 -0.785"/>
+	</joint>
+		
+	
+</robot>

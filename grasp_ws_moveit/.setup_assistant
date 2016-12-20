@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: grasp_ws_description
+    relative_path: Robot/grasp_ws.xacro
+  SRDF:
+    relative_path: config/grasp_workspace.srdf
+  CONFIG:
+    generated_timestamp: 1472691380

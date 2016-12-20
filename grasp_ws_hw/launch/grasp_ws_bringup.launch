@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="limited" default="false"/>
+
+  <!-- send robot urdf to param server -->
+  <include file="$(find grasp_ws_bringup)/launch/grasp_ws_upload.launch">
+    <arg name="limited" value="$(arg limited)"/>
+  </include>
+
+  <!--Load the Joint state controller -->
+
+  <!--Launch the ur5 -->
+  
+  <include file="$(find grasp_ws_hw)/launch/ur5_bringup.launch">
+	<arg name="robot_ip" value="192.168.1.213" />
+  </include>
+  
+  <!-- Launch the Robotiq85 hand -->
+  <include file="$(find grasp_ws_hw)/launch/robotiq_gripper.launch"/>
+  
+  <!-- Gripper action server -->
+  <node name="gripper" pkg="grasp_ws_hw" type="gripper_action_server.py" />
+
+  <!-- Launch the KInect -->
+  <include file="$(find openni_launch)/launch/openni.launch"/>
+
+  
+
+
+    
+	
+  
+</launch>

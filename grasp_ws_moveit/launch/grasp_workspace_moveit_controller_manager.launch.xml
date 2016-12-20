@@ -1,0 +1,23 @@
+<launch>
+  <arg name="real_robot" default="false"/>
+  <!--arg name="real_robot" value="true" if="$(arg real_robot)"/-->
+  
+ <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+  
+ <arg name="moveit_controller_manager" default="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+ <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
+ <!--rosparam file="$(find grasp_ws_moveit)/config/controllers.yaml"/-->
+ 
+ <!-- load controller_list -->
+
+  <group if="$(arg real_robot)" >
+     <rosparam file="$(find grasp_ws_moveit)/config/controller_real.yaml"/>
+  </group>
+
+  <group unless="$(arg real_robot)" >
+    <rosparam file="$(find grasp_ws_moveit)/config/controllers.yaml"/>
+  </group>
+  
+  
+
+</launch>

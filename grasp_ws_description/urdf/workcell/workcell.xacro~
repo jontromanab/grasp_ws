@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+<robot name="grasp_workspace_components" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- property list -->
+    <xacro:property name="workcell_height" value=".77"/>
+    <xacro:property name="workcell_length" value="1.27"/>
+    <xacro:property name="workcell_width" value=".98"/>	
+    <xacro:property name="workcell_thickness" value="0.04"/>
+
+
+
+    <!-- color macros -->
+    <xacro:macro name="material_yellow_transparent">
+		<material name="yellow_transparent">
+			<color rgba="0 1 1 0.4"/>
+		</material>
+    </xacro:macro>
+   
+    <xacro:macro name="material_gray_transparent">
+		<material name="gray_transparent">
+			<color rgba="0.6 0.6 0.6 0.4"/>
+		</material>
+    </xacro:macro>
+    
+  
+    <xacro:material_yellow_transparent />
+    <xacro:material_gray_transparent />
+    
+    <!-- end of color macros -->
+   
+
+
+    <!-- workcell definitions -->
+    <!--link name="world_frame"/-->
+
+    <!-- Workcell components xacro -->
+    <xacro:macro name="workcell" params="prefix">
+
+    <link name="${prefix}workcell_base"/>
+
+    <joint name="${prefix}workcell_base_to_table" type="fixed">
+            <parent link="${prefix}workcell_base"/>
+            <child link="${prefix}workcell_table"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0 0 ${workcell_height* 0.5}"/>
+        </joint>
+
+    <link name="${prefix}workcell_table">
+    <visual>
+      <geometry>
+	<box size="${workcell_length} ${workcell_width} ${workcell_height}"/>
+      </geometry>
+	<material name="red">
+           <color rgba="0.8 0 0 1"/>
+        </material>
+    </visual>
+      <collision>
+	 <geometry>
+	   <box size="${workcell_length} ${workcell_width} ${workcell_height}"/>
+	 </geometry>
+      <material name="gray_transparent"/>
+      </collision>
+    </link>
+
+    <joint name="${prefix}table_to_wall1" type="fixed">
+            <parent link="${prefix}workcell_table"/>
+            <child link="${prefix}wall1"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 0.0 0.0" xyz="${workcell_length* 0.5} ${workcell_width* 0.5} ${workcell_height* 0.5}"/>
+        </joint>
+
+
+    <link name="${prefix}wall1">
+    <visual>
+      <geometry>
+	<box size="${workcell_length* 2} 0.05 ${workcell_height* 2}"/>
+      </geometry>
+	<material name="white">
+           <color rgba="1 1 1 1"/>
+        </material>
+    </visual>
+      <collision>
+	 <geometry>
+	   <box size="${workcell_length* 2} 0.05 ${workcell_height* 2}"/>
+	 </geometry>
+      <material name="gray_transparent"/>
+      </collision>
+    </link>
+
+
+<joint name="${prefix}table_to_wall2" type="fixed">
+            <parent link="${prefix}workcell_table"/>
+            <child link="${prefix}wall2"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 0 1.57" xyz="${workcell_width* -0.5} ${-workcell_length* 0.5} ${workcell_height* 0.5}"/>
+        </joint>
+
+
+    <link name="${prefix}wall2">
+    <visual>
+      <geometry>
+	<box size="${workcell_length* 2} 0.05 ${workcell_height* 2}"/>
+      </geometry>
+	<material name="white">
+           <color rgba="1 1 1 1"/>
+        </material>
+    </visual>
+      <collision>
+	 <geometry>
+	   <box size="${workcell_length* 2} 0.05 ${workcell_height* 2}"/>
+	 </geometry>
+      <material name="gray_transparent"/>
+      </collision>
+    </link>
+		
+    </xacro:macro>
+
+
+</robot>

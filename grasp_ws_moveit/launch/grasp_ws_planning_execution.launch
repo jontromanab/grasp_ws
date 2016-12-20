@@ -1,0 +1,18 @@
+<!-- Launch moveit -->
+<launch>
+
+  <arg name="limited" default="false"/>
+  <arg name="real_robot" default="false"/>
+  <arg name="debug" default="false" />
+  <include file="$(find grasp_ws_moveit)/launch/move_group.launch">
+    <arg name="limited" default="$(arg limited)"/>
+    <arg name="real_robot" default="$(arg real_robot)"/>
+    <arg name="debug" default="$(arg debug)" />
+  </include>
+
+
+  <include file="$(find grasp_ws_moveit)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+  </include>
+
+</launch>
