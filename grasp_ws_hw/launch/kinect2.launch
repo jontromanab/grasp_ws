@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+<include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+  <arg name="publish_tf" value="true" />
+  <arg name="fps_limit" value="10" />
+</include>
+
+
+</launch>
