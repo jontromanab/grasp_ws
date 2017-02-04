@@ -18,11 +18,30 @@
   <!-- Launch the Robotiq85 hand -->
   <include file="$(find grasp_ws_hw)/launch/robotiq_gripper.launch"/>
   
-  <!-- Gripper action server -->
-  <node name="gripper" pkg="grasp_ws_hw" type="gripper_action_server.py" />
+  <!-- Gripper action server Python-->
+  <!--node name="gripper" pkg="grasp_ws_hw" type="gripper_action_server.py" /-->
+
+  <!-- Gripper action server C++ -->
+  <node name="gripper" pkg="robotiq_85_action" type="robotiq_85_action_server" />
 
   <!-- Launch the KInect -->
-  <include file="$(find openni_launch)/launch/openni.launch"/>
+  <!--include file="$(find openni_launch)/launch/openni.launch"/-->
+
+  <!-- Launch the KInect2 -->
+  <!--include file="$(find grasp_ws_hw)/launch/kinect2.launch"/-->
+
+  <!-- Publish a static transform for the kinect with the world -->
+  <!--node name="kinect_tf" pkg="tf" type="static_transform_publisher"
+        args="1.9 -0.06 1.5  1.57 0 -1.75 /world /kinect2_link 50"/-->
+
+
+  <!-- Managing joint states, the robot_state publisher is ur5_common is locked-->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <rosparam param="source_list">[/gripper/joint_states, /joint_states]</rosparam>   
+   </node>
+
+
+
 
   
 
